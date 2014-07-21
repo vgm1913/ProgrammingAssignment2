@@ -51,7 +51,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## author: VGM
 ## created: JUL-20-2014
 ## coursera: https://class.coursera.org/rprog-005
-#' isCacheMatrix returns a TRUE or FALSE by checking to see if parameter: 'x' is indeed a list of functions that correspond to cached matrix standard.
+#' isCacheMatrix returns a TRUE or FALSE by checking to see if parameter: 'x' is list of functions created via Makeindeed a list of functions that correspond to cached matrix standard.
 #'
 #' This function checks 'x' to make sure it is a list that contains functions with names: set, get, setmatrix, getmatrix.
 #' This is a supporting function, please see: \code{\link{makeCacheMatrix}} and \code{\link{cacheSolve}} for further information.
@@ -87,8 +87,36 @@ isCacheMatrix <- function(x) {
 	finalAnswer
 }
 
-## Write a short comment describing this function
-
+## function: cacheSolve
+## author: VGM
+## created: JUL-20-2014
+## coursera: https://class.coursera.org/rprog-005
+#' cacheSolve inverts the matrix passed 'x'. If x was created via makeCacheMatrix then cacheSolve will cache the inverted
+#' matrix only if 'x' does not contain the cached invert matrix. This function used the solve() see: \code\{link{cacheSolve}}
+#' to invert the matrix. For documentation on related functions please see: \code{\link{makeCacheMatrix}} and \code{\link{isCacheMatrix}}
+#' for further information.
+#'
+#' @param x list of functions, or a matrix
+#' @keywords matrix cache makeCacheMatrix solve
+#' @export
+#' @examples
+#' >myM <- cbind(c(1,2), c(2,1))
+#' >cacheSolve(myM)   ## regular matrix will issue a message telling caller that using makeCacheMatrix() will be faster due to cached results
+#' passed matrix param: x is not a cached matrix; use: makeCacheMatrix(x) prior to calling cacheSolve()
+#' returning the inverse of x without caching the result
+#'       [,1]       [,2]
+#' [1,] -0.3333333  0.6666667
+#' [2,]  0.6666667 -0.3333333
+#' >myCachedMatrix <- makeCacheMatrix(myM)
+#' >cacheSolve(myCachedMatrix) ## first time matrix is solved/inverted
+#'       [,1]       [,2]
+#' [1,] -0.3333333  0.6666667
+#' [2,]  0.6666667 -0.3333333
+#' >cacheSolve(myCachedMatrix) ## second time cached inverted matrix is returned - thus faster
+#' getting cached inverted matrix
+#'       [,1]       [,2]
+#' [1,] -0.3333333  0.6666667
+#' [2,]  0.6666667 -0.3333333
 cacheSolve <- function(x, ...) {
 	## make sure we got a cache matrix
 	if (!isCacheMatrix(x)) {
